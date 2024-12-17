@@ -73,6 +73,7 @@ jobs:
           tf_version: 'latest'
           tf_var_file: 'terraform.tfvars'
           tf_state_file: 'terraform.tfstate'
+          az_resource_group: 'your-resource-group'
           az_storage_account_name: 'your-storage-account-name'
           az_storage_container_name: 'your-container-name'
           az_storage_key: 'your-storage-key'
@@ -127,6 +128,7 @@ jobs:
       - name: Terraform Azure Plan
         uses: haflidif/terraform-azure-plan@v1.0.0
         with:
+          az_resource_group: 'your-resource-group'
           az_storage_account_name: 'your-storage-account-name'
           az_storage_container_name: 'your-container-name'
           az_storage_key: 'your-storage-key'
@@ -155,6 +157,7 @@ jobs:
       - name: Terraform Azure Plan
         uses: ./
         with:
+          az_resource_group: 'your-resource-group'
           az_storage_account_name: 'your-storage-account-name'
           az_storage_container_name: 'your-container-name'
           az_storage_key: 'your-storage-key'

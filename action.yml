@@ -41,9 +41,9 @@ inputs:
   
   # Azure Remote Backend Resource Inputs
   az_resource_group:
-  description: '(Required) The name of the Azure Resource Group to use for the remote backend.'
-  type: string
-  required: true
+    description: '(Required) The name of the Azure Resource Group to use for the remote backend.'
+    type: string
+    required: true
 
   az_storage_account_name:
     description: '(Required) The name of the Azure Storage Account to use for the remote backend.'
