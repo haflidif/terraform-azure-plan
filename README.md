@@ -12,6 +12,7 @@ This GitHub Action runs `terraform plan` with an Azure Remote Backend and upload
 | `tf_version`              | (Optional) The version of Terraform to use. Defaults to the latest version.                                       | No       | string  | `latest`               |
 | `tf_var_file`             | (Optional) The variable file to use. Defaults to `terraform.tfvars`.                                              | No       | string  | `terraform.tfvars`     |
 | `tf_state_file`           | (Optional) The state file to use. Defaults to `terraform.tfstate`.                                                | No       | string  | `terraform.tfstate`    |
+| `az_resource_group`       | (Required) The name of the Azure Resource Group to use for the remote backend.                                    | Yes      | string  |                        |
 | `az_storage_account_name` | (Required) The name of the Azure Storage Account to use for the remote backend.                                   | Yes      | string  |                        |
 | `az_storage_container_name`| (Required) The name of the Azure Storage Container to use for the remote backend.                                | Yes      | string  |                        |
 | `az_storage_key`          | (Required) The key to use for the remote backend.                                                                 | Yes      | string  |                        |
@@ -32,6 +33,7 @@ The following arguments are supported:
 - `tf_version` - (Optional) The version of Terraform to use. Defaults to the latest version.
 - `tf_var_file` - (Optional) The variable file to use. Defaults to `terraform.tfvars`.
 - `tf_state_file` - (Optional) The state file to use. Defaults to `terraform.tfstate`.
+- `az_resource_group` - (Required) The name of the Azure Resource Group to use for the remote backend.
 - `az_storage_account_name` - (Required) The name of the Azure Storage Account to use for the remote backend.
 - `az_storage_container_name` - (Required) The name of the Azure Storage Container to use for the remote backend.
 - `az_storage_key` - (Required) The key to use for the remote backend.

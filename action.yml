@@ -40,7 +40,11 @@ inputs:
     default: 'terraform.tfstate'
   
   # Azure Remote Backend Resource Inputs
-  
+  az_resource_group:
+  description: '(Required) The name of the Azure Resource Group to use for the remote backend.'
+  type: string
+  required: true
+
   az_storage_account_name:
     description: '(Required) The name of the Azure Storage Account to use for the remote backend.'
     type: string
@@ -150,6 +154,7 @@ runs:
       id: init
       run: | 
         terraform init
+        --backend-config="resource_group_name=${{ inputs.az_resource_group }}"
         --backend-config="storage_account_name=${{ inputs.az_storage_acc }}"
         --backend-config="container_name=${{ inputs.az_container_name }}"
         --backend-config="resource_group_name=${{ inputs.az_resource_group }}"
