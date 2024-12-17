@@ -234,7 +234,7 @@ runs:
       working-directory: ${{ inputs.path }}
 
     - name: Upload Plan Artifact
-      uses: actions/upload-artifact@v4.3.3
+      uses: actions/upload-artifact@v4.4.3
       with:
         name: "${{ input.plan_mode }}-${{ inputs.az_strorage_key }}"
         path: "${{ inputs.path }}/${{ input.plan_mode }}${{ inputs.az_strorage_key }}.zip"
