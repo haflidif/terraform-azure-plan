@@ -166,3 +166,18 @@ jobs:
           arm_client_id: 'your-client-id'
           arm_client_secret: ${{ secrets.ARM_CLIENT_SECRET }}
 ```
+
+## Credits
+Inspired and based on Github Action by [Marcel Lupo (Pwd9000-ML)](https://github.com/Pwd9000-ML)
+- [terraform-azurerm-plan by Marcel Lupo (Pwd9000-ML)](https://github.com/Pwd9000-ML/terraform-azurerm-plan)
+
+## Authors
+- Modified and refactored by [Haflidi Fridthjofsson](https://github.com/haflidif)
+- Idea, code and inspiration by [Marcel Lupo / Pwd9000-ML](https://github.com/Pwd9000-ML)
+
+## Disclaimer
+The code examples in this repository are provided “as-is” and can be used in production environments at your own responsibility. They come with no warranty of any kind. Use them at your own risk. I am not responsible for any issues, damages, or costs that may arise from using these code examples.
+
+
+## License
+This project is licensed under the GPL-3.0 License - see the [LICENSE](LICENSE) file for details.
