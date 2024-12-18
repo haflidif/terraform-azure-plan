@@ -182,7 +182,7 @@ runs:
       id: deploy_plan
       run: |
         terraform plan --var-file=${{ inputs.tf_var_file }} --out=deploy_plan.tfplan
-        terraform show -json -no-color deploy_plan.tfplan > deploy_plan_json.json
+        terraform show -json -no-color deploy_plan.tfplan > deploy_plan.json
       working-directory: ${{ inputs.path }}
 
     - name: PR Plan (Deploy)
