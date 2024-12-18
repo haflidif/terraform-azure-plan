@@ -182,7 +182,7 @@ runs:
         commenter_exitcode: ${{ steps.validate.outputs.exitcode }}
 
     - name: Terraform Plan (Deploy)
-      if: ${{ input.plan_mode == 'deploy' }}
+      if: ${{ inputs.plan_mode == 'deploy' }}
       shell: bash
       id: deploy_plan
       run: |
@@ -196,7 +196,7 @@ runs:
       working-directory: ${{ inputs.path }}
 
     - name: PR Plan (Deploy)
-      if: ${{ input.plan_mode == 'deploy' }} && github.event_name == 'pull_request' }}
+      if: ${{ inputs.plan_mode == 'deploy' }} && github.event_name == 'pull_request' }}
       uses: Jimdo/terraform-pr-commenter@1.6.1
       with:
         commenter_type: plan
@@ -204,7 +204,7 @@ runs:
         commenter_exitcode: ${{ steps.deploy_plan.outputs.exitcode }}
     
     - name: Terraform Plan (Destroy)
-      if: ${{ input.plan_mode != 'deploy' }}
+      if: ${{ inputs.plan_mode != 'deploy' }}
       shell: bash
       id: destroy_plan
       run: |
@@ -219,7 +219,7 @@ runs:
       working-directory: ${{ inputs.path }}
 
     - name: PR Plan (Destroy)
-      if: ${{ input.plan_mode != 'deploy' }} && github.event_name == 'pull_request' }}
+      if: ${{ inputs.plan_mode != 'deploy' }} && github.event_name == 'pull_request' }}
       uses: Jimdo/terraform-pr-commenter@1.6.1
       with:
         commenter_type: plan
@@ -229,12 +229,12 @@ runs:
     - name: Compress Terraform Plan Artifacts
       shell: bash
       id: compress_plan_artifacts
-      run: zip -r ${{ input.plan_mode}}${{ inputs.az_strorage_key }}.zip ./*
+      run: zip -r ${{ inputs.plan_mode}}${{ inputs.az_strorage_key }}.zip ./*
       working-directory: ${{ inputs.path }}
 
     - name: Upload Plan Artifact
       uses: actions/upload-artifact@v4.4.3
       with:
-        name: "${{ input.plan_mode }}-${{ inputs.az_strorage_key }}"
-        path: "${{ inputs.path }}/${{ input.plan_mode }}${{ inputs.az_strorage_key }}.zip"
-        retention-days: ${{ input.artifact_retention_days }}
+        name: "${{ inputs.plan_mode }}-${{ inputs.az_strorage_key }}"
+        path: "${{ inputs.path }}/${{ inputs.plan_mode }}${{ inputs.az_strorage_key }}.zip"
+        retention-days: ${{ inputs.artifact_retention_days }}
