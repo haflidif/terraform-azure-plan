@@ -55,11 +55,6 @@ inputs:
     type: string
     required: true
 
-  az_storage_key:
-    description: "(Required) The key to use for the remote backend."
-    type: string
-    required: true
-
   # Azure ARM Inputs
 
   arm_client_id:
@@ -151,7 +146,7 @@ runs:
     - name: Terraform Init
       shell: bash
       id: init
-      run: terraform init --backend-config="storage_account_name=${{ inputs.az_storage_account_name }}" --backend-config="container_name=${{ inputs.az_storage_container_name }}" --backend-config="resource_group_name=${{ inputs.az_resource_group }}" --backend-config="key=${{ inputs.az_storage_key }}"
+      run: terraform init --backend-config="storage_account_name=${{ inputs.az_storage_account_name }}" --backend-config="container_name=${{ inputs.az_storage_container_name }}" --backend-config="resource_group_name=${{ inputs.az_resource_group }}" --backend-config="key=${{ inputs.tf_state_file }}"
       working-directory: ${{ inputs.path }}
 
     - name: PR Init
@@ -215,12 +210,12 @@ runs:
     - name: Compress Terraform Plan Artifacts
       shell: bash
       id: compress_plan_artifacts
-      run: zip -r ${{ inputs.plan_mode}}${{ inputs.az_storage_key }}.zip ./*
+      run: zip -r ${{ inputs.plan_mode}}${{ inputs.tf_state_file }}.zip ./*
       working-directory: ${{ inputs.path }}
 
     - name: Upload Plan Artifact
       uses: actions/upload-artifact@v4.4.3
       with:
-        name: "${{ inputs.plan_mode }}-${{ inputs.az_storage_key }}"
-        path: "${{ inputs.path }}/${{ inputs.plan_mode }}${{ inputs.az_storage_key }}.zip"
+        name: "${{ inputs.plan_mode }}-${{ inputs.tf_state_file }}"
+        path: "${{ inputs.path }}/${{ inputs.plan_mode }}${{ inputs.tf_state_file }}.zip"
         retention-days: ${{ inputs.artifact_retention_days }}
