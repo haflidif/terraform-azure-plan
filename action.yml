@@ -1,106 +1,106 @@
-name: 'Terraform Plan - Azure'
-description: 'Runs terraform plan with Azure Remote Backend, and uploads plan as workflow artifact'
+name: "Terraform Plan - Azure"
+description: "Runs terraform plan with Azure Remote Backend, and uploads plan as workflow artifact"
 
 inputs:
   path:
-    description: '(Optional) Path to the Terraform configuration files, defaults to the current working directory'
+    description: "(Optional) Path to the Terraform configuration files, defaults to the current working directory"
     required: false
     default: .
-  
+
   artifact_retention_days:
-    description: '(Optional) The number of days to retain the plan artifact. Defaults to `5`.'
+    description: "(Optional) The number of days to retain the plan artifact. Defaults to `5`."
     required: false
     type: number
     default: 5
-      
+
   plan_mode:
-    description: '(Optional) The mode to run the plan in. Valid options are `deploy` or `destroy`. Defaults to `deploy`.'
+    description: "(Optional) The mode to run the plan in. Valid options are `deploy` or `destroy`. Defaults to `deploy`."
     type: string
     required: false
-    default: 'deploy'
-  
+    default: "deploy"
+
   # Terraform Inputs
 
   tf_version:
-    description: '(Optional) The version of Terraform to use. Defaults to the latest version.'
+    description: "(Optional) The version of Terraform to use. Defaults to the latest version."
     type: string
     required: false
-    default: 'latest'
-    
+    default: "latest"
+
   tf_var_file:
-    description: '(Optional) The variable file to use. Defaults to `terraform.tfvars`.'
+    description: "(Optional) The variable file to use. Defaults to `terraform.tfvars`."
     type: string
     required: false
-    default: 'terraform.tfvars'
-   
+    default: "terraform.tfvars"
+
   tf_state_file:
-    description: '(Optional) The state file to use. Defaults to `terraform.tfstate`.'
+    description: "(Optional) The state file to use. Defaults to `terraform.tfstate`."
     type: string
     required: false
-    default: 'terraform.tfstate'
-  
+    default: "terraform.tfstate"
+
   # Azure Remote Backend Resource Inputs
   az_resource_group:
-    description: '(Required) The name of the Azure Resource Group to use for the remote backend.'
+    description: "(Required) The name of the Azure Resource Group to use for the remote backend."
     type: string
     required: true
 
   az_storage_account_name:
-    description: '(Required) The name of the Azure Storage Account to use for the remote backend.'
+    description: "(Required) The name of the Azure Storage Account to use for the remote backend."
     type: string
     required: true
-  
+
   az_storage_container_name:
-    description: '(Required) The name of the Azure Storage Container to use for the remote backend.'
+    description: "(Required) The name of the Azure Storage Container to use for the remote backend."
     type: string
     required: true
-  
+
   az_storage_key:
-    description: '(Required) The key to use for the remote backend.'
+    description: "(Required) The key to use for the remote backend."
     type: string
     required: true
-  
+
   # Azure ARM Inputs
 
   arm_client_id:
-    description: '(Required) The client ID of the `Azure Service Principal` or `User Assigned Managed Identity` to use for authentication.'
+    description: "(Required) The client ID of the `Azure Service Principal` or `User Assigned Managed Identity` to use for authentication."
     type: string
     required: true
-  
+
   arm_use_oidc:
-    description: '(Optional) Whether to use OIDC for authentication. Defaults to `false`.'
+    description: "(Optional) Whether to use OIDC for authentication. Defaults to `false`."
     required: false
     type: boolean
     default: false
-  
+
   arm_use_azuread:
-    description: | 
+    description: |
       (Optional) Whether to use Azure AD for authentication towards Azure Remote Backend Storage Account and Containers.
       Requires RBAC permissions `Storage Blob Data Owner` or `Storage Blob Data Contributor` on the Storage Account/Container for the identity being used.
       Defaults to `false`.
     required: false
     type: boolean
     default: false
-  
+
   arm_client_secret:
-    description: '(Conditionally required) The client secret of the Azure Service Principal to use for authentication. Required if `arm_client_id` is a Service Principal with Client Secret'
+    description: "(Conditionally required) The client secret of the Azure Service Principal to use for authentication. Required if `arm_client_id` is a Service Principal with Client Secret"
     required: false
     type: string
-    default: ''
-  
+    default: ""
+
   arm_tenant_id:
-    description: '(Required) The tenant ID of the Azure Service Principal to use for authentication.'
+    description: "(Required) The tenant ID of the Azure Service Principal to use for authentication."
     type: string
     required: true
-  
+
   arm_subscription_id:
-    description: '(Required) The subscription ID of the Azure Service Principal to use for authentication.'
+    description: "(Required) The subscription ID of the Azure Service Principal to use for authentication."
     type: string
     required: true
-  
+
   # Github Token, to use with PR Commenter.
   github_token:
-    description: '(Required) The GitHub token to use for posting comments on pull requests, please specify a valid GitHub token.'
+    description: "(Required) The GitHub token to use for posting comments on pull requests, please specify a valid GitHub token."
     type: string
     required: true
 
@@ -133,7 +133,7 @@ runs:
       with:
         terraform_version: ${{ inputs.tf_version }}
         terraform_wrapper: true
-    
+
     - name: Terraform Format
       shell: bash
       id: fmt
@@ -147,13 +147,13 @@ runs:
         commenter_type: fmt
         commenter_input: ${{ format('{0}{1}', steps.fmt.outputs.stdout, steps.fmt.outputs.stderr) }}
         commenter_exitcode: ${{ steps.fmt.outputs.exitcode }}
-    
+
     - name: Terraform Init
       shell: bash
       id: init
       run: terraform init --backend-config="storage_account_name=${{ inputs.az_storage_account_name }}" --backend-config="container_name=${{ inputs.az_storage_container_name }}" --backend-config="resource_group_name=${{ inputs.az_resource_group }}" --backend-config="key=${{ inputs.az_storage_key }}"
       working-directory: ${{ inputs.path }}
-    
+
     - name: PR Init
       if: github.event_name == 'pull_request'
       uses: jimdo/terraform-pr-commenter@v1.6.1
@@ -161,7 +161,7 @@ runs:
         commenter_type: init
         commenter_input: ${{ format('{0}{1}', steps.init.outputs.stdout, steps.init.outputs.stderr) }}
         commenter_exitcode: ${{ steps.init.outputs.exitcode }}
-    
+
     - name: Terraform Validate
       shell: bash
       id: validate
@@ -181,13 +181,8 @@ runs:
       shell: bash
       id: deploy_plan
       run: |
-        terraform plan 
-        -var-file=${{ inputs.tf_var_file }}
-        -out=deploy_plan.tfplan 
-        
-        terraform show
-        -json
-        -no-color deploy_plan.tfplan > deploy_plan.json
+        terraform plan --var-file=${{ inputs.tf_vars_file }} --out=deploy_plan.tfplan
+        terraform show -json -no-color deploy_plan.tfplan > deploy_plan_json.json
       working-directory: ${{ inputs.path }}
 
     - name: PR Plan (Deploy)
@@ -197,20 +192,14 @@ runs:
         commenter_type: plan
         commenter_input: ${{ format('{0}{1}', steps.deploy_plan.outputs.stdout, steps.deploy_plan.outputs.stderr) }}
         commenter_exitcode: ${{ steps.deploy_plan.outputs.exitcode }}
-    
+
     - name: Terraform Plan (Destroy)
       if: ${{ inputs.plan_mode != 'deploy' }}
       shell: bash
       id: destroy_plan
       run: |
-        terraform plan 
-        -destroy
-        -var-file=${{ inputs.tf_var_file }}
-        -out=destroy_plan.tfplan 
-        
-        terraform show
-        -json
-        -no-color destroy_plan.tfplan > destroy_plan.json
+        terraform plan --destroy -var-file=${{ inputs.tf_var_file }} -out=destroy_plan.tfplan 
+        terraform show -json -no-color destroy_plan.tfplan > destroy_plan.json
       working-directory: ${{ inputs.path }}
 
     - name: PR Plan (Destroy)
@@ -220,7 +209,7 @@ runs:
         commenter_type: plan
         commenter_input: ${{ format('{0}{1}', steps.destroy_plan.outputs.stdout, steps.destroy_plan.outputs.stderr) }}
         commenter_exitcode: ${{ steps.destroy_plan.outputs.exitcode }}
-    
+
     - name: Compress Terraform Plan Artifacts
       shell: bash
       id: compress_plan_artifacts
