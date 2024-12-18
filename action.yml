@@ -157,6 +157,7 @@ runs:
         --backend-config="container_name=${{ inputs.az_container_name }}"
         --backend-config="resource_group_name=${{ inputs.az_resource_group }}"
         --backend-config="key=${{ inputs.az_strorage_key }}"
+      working-directory: ${{ inputs.path }}
     
     - name: PR Init
       if: github.event_name == 'pull_request'
