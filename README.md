@@ -44,6 +44,16 @@ This GitHub Action runs `terraform plan` with an Azure Remote Backend and upload
 - `arm_subscription_id` - Subscription ID of the Azure Service Principal for authentication.
 - `github_token` - GitHub token for posting comments on pull requests. Specify a valid GitHub token.
 
+## Actions Used
+
+| Action                          | Version   | Purpose                                                                 |
+|---------------------------------|-----------|-------------------------------------------------------------------------|
+| `actions/checkout`              | `v4.2.0`  | Checks out the repository to the runner.                                |
+| `hashicorp/setup-terraform`     | `v3.1.2`  | Sets up Terraform CLI in the GitHub Actions runner.                     |
+| `jimdo/terraform-pr-commenter`  | `v1.6.1`  | Posts comments on pull requests with the results of Terraform commands. |
+| `liatrio/terraform-change-pr-commenter` | `v1.7.1` | Posts comments on pull requests with the Terraform plan changes, in addition to the results of Terraform plan within workflow summary. |
+| `actions/upload-artifact`       | `v4.4.3`  | Uploads artifacts to be used in subsequent workflow steps.              |
+
 ## Usage Examples
 
 ### Installation
