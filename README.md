@@ -2,7 +2,7 @@
 
 [![Dependabot](https://badgen.net/badge/Dependabot/enabled/green?icon=dependabot)](https://dependabot.com/)
 
-This GitHub Action runs `terraform plan` with an Azure Remote Backend and uploads the plan as a workflow artifact that can be used with `haflidif/terraform-azure-apply`.
+This GitHub Action runs `terraform plan` with an Azure Remote Backend and uploads the plan as a workflow artifact that can be used with [haflidif/terraform-azure-apply](https://github.com/haflidif/terraform-azure-apply).
 
 ## Inputs
 
