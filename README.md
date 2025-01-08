@@ -52,7 +52,7 @@ This GitHub Action runs `terraform plan` with an Azure Remote Backend and upload
 | `hashicorp/setup-terraform`     | `v3.1.2`  | Sets up Terraform CLI in the GitHub Actions runner.                     |
 | `jimdo/terraform-pr-commenter`  | `v1.6.1`  | Posts comments on pull requests with the results of Terraform commands. |
 | `liatrio/terraform-change-pr-commenter` | `v1.7.1` | Posts comments on pull requests with the Terraform plan changes, in addition to the results of Terraform plan within workflow summary. |
-| `actions/upload-artifact`       | `v4.4.3`  | Uploads artifacts to be used in subsequent workflow steps.              |
+| `actions/upload-artifact`       | `v4.5.0`  | Uploads artifacts to be used in subsequent workflow steps.              |
 
 ## Usage Examples
 
