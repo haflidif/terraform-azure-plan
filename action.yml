@@ -228,7 +228,7 @@ runs:
       working-directory: ${{ inputs.path }}
 
     - name: Upload Plan Artifact
-      uses: actions/upload-artifact@v4.5.0
+      uses: actions/upload-artifact@v4.6.1
       with:
         name: "${{ inputs.plan_mode }}-${{ inputs.tf_state_file }}"
         path: "${{ inputs.path }}/${{ inputs.plan_mode }}${{ inputs.tf_state_file }}.zip"
