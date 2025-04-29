@@ -137,7 +137,7 @@ runs:
 
     - name: PR Format
       if: github.event_name == 'pull_request'
-      uses: jimdo/terraform-pr-commenter@v1.6.1
+      uses: jimdo/terraform-pr-commenter@v1.8.0
       env:
         GITHUB_TOKEN: ${{ inputs.github_token }}
       with:
@@ -153,7 +153,7 @@ runs:
 
     - name: PR Init
       if: github.event_name == 'pull_request'
-      uses: jimdo/terraform-pr-commenter@v1.6.1
+      uses: jimdo/terraform-pr-commenter@v1.8.0
       env:
         GITHUB_TOKEN: ${{ inputs.github_token }}
       with:
@@ -169,7 +169,7 @@ runs:
 
     - name: PR Validate
       if: github.event_name == 'pull_request'
-      uses: jimdo/terraform-pr-commenter@v1.6.1
+      uses: jimdo/terraform-pr-commenter@v1.8.0
       env:
         GITHUB_TOKEN: ${{ inputs.github_token }}
       with:
